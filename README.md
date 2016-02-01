@@ -7,8 +7,8 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/slickframework/validator/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/slickframework/validator?branch=master)
 [![Total Downloads](https://img.shields.io/packagist/dt/slick/validator.svg?style=flat-square)](https://packagist.org/packages/slick/validator)
 
-`Slick/Validator` is a simple library with useful input validators. It also has a `ValidatorChain`
-that can be used to combine different validators for one input.
+`Slick/Validator` is a set of input validation tools that can be used to check your input data.
+It also has the concept of _Validation Chain_ that can combine validators for a specifica validation.
 
 This package is compliant with PSR-2 code standards and PSR-4 autoload standards. It
 also applies the [semantic version 2.0.0](http://semver.org) specification.
@@ -23,6 +23,65 @@ $ composer require slick/validator
 
 ## Usage
 
+One of the easiest ways of using a validator is using `StaticValidator` class to check a value:
+```php
+use Slick\Validator\StaticValidator;
+
+if (StaticValidator::isValid('notEmpty', $value) {
+  // Some code with valid value
+} else {
+  print implode("\n", StaticValidator::getMessages()); // Print out validation messages
+}
+
+```
+
+`Slick/Validator` comes with the following validators:
+
+Alias      | Description                              | Class
+:---------:|------------------------------------------|---------------------------
+_notEmpty_ | Fails if passed value is an empty string | `Slick\Validator\NotEmpty`
+_email_    | Fails if passed value is not a valid e-mail address | `Slick\Validator\Email`
+_number_   | Fails if passed value is not am integer number | `Slick\Validator\Number`
+_alphaNumeric_ | Fails if passed value is not an alpha numeric value | `Slick\Validator\AlphaNumeric`
+_url_ | Fails if passed value is not an URL | `Slick\Validator\URL`
+
+`StaticValidator` is also a validator objects factory. For example:
+```php
+use Slick\Validator\StaticValidator;
+
+$urlValidator = StaticValidator::create('notEmpty', 'You must enter a valid URL.');
+
+if ($urlValidator->isValid($_POST['url']) {
+    // URL is valid use it...
+} else {
+    print $urlValidator->getMessage(); // Will print out 'You must enter a valid URL.'
+}
+
+```
+
+Combining various validator to use it as a single validation can be done with
+`ValidatorChain`.
+
+```php
+use Slick\Validator\StaticValidator;
+use Slick\Validator\ValidatorChain;
+
+$emailValidation = new ValidatorChain();
+$emailValidation
+    ->add(StaticValidator::create('notEmpty', 'Email address cannot be empty.'))
+    ->add(StaticValidator::create('email', 'The entered e-mail is not a valid address.');
+    
+if ($emailValidation->isValid($_POST['email']) {
+    // URL is valid use it...
+} else {
+    print implode(', ', $emailValidation->getMessages()); 
+    // Will print out the validation messages for the validator(s) that fail.
+}    
+
+``` 
+
+You can alway create your own validator and use the `StaticValidator` or the `ValidatorChain` as long
+as you implement the `Slick\Validator\ValidatorInterface`.
 
 ## Testing
 
@@ -46,4 +105,3 @@ If you discover any security related issues, please email silvam.filipe@gmail.co
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
