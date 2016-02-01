@@ -41,7 +41,7 @@ class EmailTest extends TestCase
      */
     public function validEmail()
     {
-        $this->assertTrue($this->email->isValid('name@example.com'));
+        $this->assertTrue($this->email->validates('name@example.com'));
     }
 
     /**
@@ -50,7 +50,7 @@ class EmailTest extends TestCase
      */
     public function invalidEmail()
     {
-        $this->assertFalse($this->email->isValid('test'));
+        $this->assertFalse($this->email->validates('test'));
     }
 
     /**
@@ -60,8 +60,8 @@ class EmailTest extends TestCase
     public function setCustomMessage()
     {
         $message = '%s, is not valid!';
-        $this->email->setMessage('email', $message);
-        $this->email->isValid('test');
-        $this->assertEquals(sprintf($message, 'test'), $this->email->getMessages()['email']);
+        $this->email->setMessage($message);
+        $this->email->validates('test');
+        $this->assertEquals(sprintf($message, 'test'), $this->email->getMessage());
     }
 }

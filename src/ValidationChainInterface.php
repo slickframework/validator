@@ -10,25 +10,13 @@
 namespace Slick\Validator;
 
 /**
- * Validator Interface
+ * Validation Chain Interface
  *
  * @package Slick\Validator
  * @author  Filipe Silva <silvam.filipe@gmail.com>
  */
-interface ValidatorInterface
+interface ValidationChainInterface extends ValidatorInterface
 {
-    /**
-     * Returns true if and only if $value meets the validation requirements
-     *
-     * The context specified can be used in the validation process so that
-     * the same value can be valid or invalid depending on that data.
-     *
-     * @param mixed $value
-     * @param array|mixed $context
-     *
-     * @return bool
-     */
-    public function validates($value, $context = []);
 
     /**
      * Returns an array of messages that explain why the most recent
@@ -38,14 +26,14 @@ interface ValidatorInterface
      *
      * @return array
      */
-    public function getMessage();
+    public function getMessages();
 
     /**
-     * Sets a custom message for a given identifier
+     * Adds a validator to the chain
      *
-     * @param string $message
+     * @param ValidatorInterface $validator
      *
-     * @return ValidatorInterface
+     * @return ValidatorChain
      */
-    public function setMessage($message);
+    public function add(ValidatorInterface $validator);
 }

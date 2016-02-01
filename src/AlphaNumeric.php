@@ -22,21 +22,26 @@ class AlphaNumeric extends AbstractValidator implements ValidatorInterface
      * @readwrite
      * @var array Message templates
      */
-    protected $_messageTemplates = [
-        'alphaNumeric' => 'The value can only contain alpha numeric characters.'
-    ];
+    protected $messageTemplate =
+        'The value can only contain alpha numeric characters.';
+
 
     /**
      * Returns true if and only if $value meets the validation requirements
      *
+     * The context specified can be used in the validation process so that
+     * the same value can be valid or invalid depending on that data.
+     *
      * @param mixed $value
+     * @param array|mixed $context
+     *
      * @return bool
      */
-    public function isValid($value)
+    public function validates($value, $context = [])
     {
         $result = (boolean) preg_match('/^([0-9a-zA-Z\-]+)$/i', $value);
         if (!$result) {
-            $this->addMessage('alphaNumeric');
+            $this->addMessage($this->messageTemplate, $value);
         }
         return $result;
     }

@@ -49,10 +49,10 @@ class StaticValidatorTest extends TestCase
     public function testCreateValidator()
     {
         $validator = StaticValidator::create('notEmpty', 'Just a test');
-        $validator->isValid('');
+        $validator->validates('');
         $this->assertContains(
             'Just a test',
-            $validator->getMessages()
+            $validator->getMessage()
         );
     }
 

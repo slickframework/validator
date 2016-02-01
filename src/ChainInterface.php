@@ -14,6 +14,7 @@ namespace Slick\Validator;
  *
  * @package Slick\Validator
  * @author  Filipe Silva <silvam.filipe@gmail.com>
+ * @deprecated  You should use the ValidationChainInterface instead
  */
 interface ChainInterface
 {
