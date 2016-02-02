@@ -32,9 +32,7 @@ interface ValidatorInterface
 
     /**
      * Returns an array of messages that explain why the most recent
-     * isValid() call returned false. The array keys are validation failure
-     * message identifiers, and the array values are the corresponding
-     * human-readable message strings.
+     * validates() call returned false.
      *
      * @return array
      */

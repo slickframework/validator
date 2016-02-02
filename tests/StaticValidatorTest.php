@@ -67,4 +67,13 @@ class StaticValidatorTest extends TestCase
         $this->setExpectedException(UnknownValidatorClassException::class);
         StaticValidator::isValid('stdClass', '');
     }
+
+    public function testValidates()
+    {
+        $this->assertFalse(StaticValidator::validates('notEmpty', ''));
+        $this->assertEquals(
+            'The value cannot be empty.',
+            StaticValidator::geMessage()
+        );
+    }
 }

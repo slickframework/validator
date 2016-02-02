@@ -27,10 +27,10 @@ One of the easiest ways of using a validator is using `StaticValidator` class to
 ```php
 use Slick\Validator\StaticValidator;
 
-if (StaticValidator::isValid('notEmpty', $value) {
+if (StaticValidator::validates('notEmpty', $value) {
   // Some code with valid value
 } else {
-  print implode("\n", StaticValidator::getMessages()); // Print out validation messages
+  print StaticValidator::getMessage(); // Print out validation messages
 }
 
 ```
@@ -51,7 +51,7 @@ use Slick\Validator\StaticValidator;
 
 $urlValidator = StaticValidator::create('notEmpty', 'You must enter a valid URL.');
 
-if ($urlValidator->isValid($_POST['url']) {
+if ($urlValidator->validates($_POST['url']) {
     // URL is valid use it...
 } else {
     print $urlValidator->getMessage(); // Will print out 'You must enter a valid URL.'
@@ -80,8 +80,8 @@ if ($emailValidation->isValid($_POST['email']) {
 
 ``` 
 
-You can alway create your own validator and use the `StaticValidator` or the `ValidatorChain` as long
-as you implement the `Slick\Validator\ValidatorInterface`.
+You can always create your own validator and use the `StaticValidator` or the `ValidationChain` as long
+as you implement the `Slick\Validator\ValidatorInterface` or `Slick\Validator\ValidationChainInterface`.
 
 ## Testing
 
