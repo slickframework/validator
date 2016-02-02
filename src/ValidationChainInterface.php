@@ -10,22 +10,13 @@
 namespace Slick\Validator;
 
 /**
- * Validator Chain Interface
+ * Validation Chain Interface
  *
  * @package Slick\Validator
  * @author  Filipe Silva <silvam.filipe@gmail.com>
- * @deprecated  You should use the ValidationChainInterface instead
  */
-interface ChainInterface
+interface ValidationChainInterface extends ValidatorInterface
 {
-
-    /**
-     * Returns true if and only if $value meets the validation requirements
-     *
-     * @param mixed $value
-     * @return bool
-     */
-    public function isValid($value);
 
     /**
      * Returns an array of messages that explain why the most recent
@@ -36,4 +27,13 @@ interface ChainInterface
      * @return array
      */
     public function getMessages();
+
+    /**
+     * Adds a validator to the chain
+     *
+     * @param ValidatorInterface $validator
+     *
+     * @return ValidatorChain
+     */
+    public function add(ValidatorInterface $validator);
 }

@@ -8,7 +8,7 @@
     "validation",
     "input validation"
   ],
-  "version": "v1.0.4",
+  "version": "v1.1.0",
   "minimum-stability": "dev",
   "authors": [
     {
@@ -37,8 +37,8 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0-dev",
-      "dev-develop": "1.1-dev"
+      "dev-master": "1.1-dev",
+      "dev-develop": "1.2-dev"
     }
   }
 }

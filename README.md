@@ -8,7 +8,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/slick/validator.svg?style=flat-square)](https://packagist.org/packages/slick/validator)
 
 `Slick/Validator` is a set of input validation tools that can be used to check your input data.
-It also has the concept of _Validation Chain_ that can combine validators for a specifica validation.
+It also has the concept of _Validation Chain_ that can combine validators for a specific validation.
 
 This package is compliant with PSR-2 code standards and PSR-4 autoload standards. It
 also applies the [semantic version 2.0.0](http://semver.org) specification.
@@ -27,10 +27,10 @@ One of the easiest ways of using a validator is using `StaticValidator` class to
 ```php
 use Slick\Validator\StaticValidator;
 
-if (StaticValidator::isValid('notEmpty', $value) {
+if (StaticValidator::validates('notEmpty', $value) {
   // Some code with valid value
 } else {
-  print implode("\n", StaticValidator::getMessages()); // Print out validation messages
+  print StaticValidator::getMessage(); // Print out validation messages
 }
 
 ```
@@ -51,7 +51,7 @@ use Slick\Validator\StaticValidator;
 
 $urlValidator = StaticValidator::create('notEmpty', 'You must enter a valid URL.');
 
-if ($urlValidator->isValid($_POST['url']) {
+if ($urlValidator->validates($_POST['url']) {
     // URL is valid use it...
 } else {
     print $urlValidator->getMessage(); // Will print out 'You must enter a valid URL.'
@@ -60,18 +60,18 @@ if ($urlValidator->isValid($_POST['url']) {
 ```
 
 Combining various validator to use it as a single validation can be done with
-`ValidatorChain`.
+`ValidationChain`.
 
 ```php
 use Slick\Validator\StaticValidator;
-use Slick\Validator\ValidatorChain;
+use Slick\Validator\ValidationChain;
 
-$emailValidation = new ValidatorChain();
+$emailValidation = new ValidationChain();
 $emailValidation
     ->add(StaticValidator::create('notEmpty', 'Email address cannot be empty.'))
     ->add(StaticValidator::create('email', 'The entered e-mail is not a valid address.');
     
-if ($emailValidation->isValid($_POST['email']) {
+if ($emailValidation->validates($_POST['email']) {
     // URL is valid use it...
 } else {
     print implode(', ', $emailValidation->getMessages()); 
@@ -80,8 +80,8 @@ if ($emailValidation->isValid($_POST['email']) {
 
 ``` 
 
-You can alway create your own validator and use the `StaticValidator` or the `ValidatorChain` as long
-as you implement the `Slick\Validator\ValidatorInterface`.
+You can always create your own validator and use the `StaticValidator` or the `ValidationChain` as long
+as you implement the `Slick\Validator\ValidatorInterface` or `Slick\Validator\ValidationChainInterface`.
 
 ## Testing
 

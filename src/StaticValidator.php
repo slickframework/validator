@@ -34,7 +34,12 @@ final class StaticValidator
     /**
      * @var array The error messages from last validation
      */
-    protected static $_messages = [];
+    protected static $messages = [];
+
+    /**
+     * @var string
+     */
+    protected static $message = '';
 
     /**
      * Returns true if and only if $value meets the validation requirements
@@ -45,14 +50,37 @@ final class StaticValidator
      * @throws Exception\UnknownValidatorClassException
      * @return bool
      *
+     * @deprecated Should use the validates instead
+     *
      * @see Slick\Validator\StaticValidator::$validators
      */
     public static function isValid($validator, $value)
     {
         /** @var ValidatorInterface $validator */
         $validator = static::create($validator);
-        $result = $validator->isValid($value);
-        static::$_messages = $validator->getMessages();
+        $result = $validator->validates($value);
+        static::$messages[] = $validator->getMessage();
+        return $result;
+    }
+
+    /**
+     * Returns true if and only if $value meets the validation requirements
+     *
+     * The context specified can be used in the validation process so that
+     * the same value can be valid or invalid depending on that data.
+     *
+     * @param string $validator
+     * @param mixed $value
+     * @param array|mixed $context
+     *
+     * @return bool
+     */
+    public static function validates($validator, $value, $context = [])
+    {
+        /** @var ValidatorInterface $validator */
+        $validator = static::create($validator);
+        $result = $validator->validates($value, $context);
+        static::$message = $validator->getMessage();
         return $result;
     }
 
@@ -70,13 +98,11 @@ final class StaticValidator
     public static function create($validator, $message = null)
     {
         $class = self::checkValidator($validator);
-        $id = lcfirst(str_replace("\\", "", $validator));
-
 
         /** @var ValidatorInterface $object */
         $object = new $class;
         if (!is_null($message)) {
-            $object->setMessage($id, $message);
+            $object->setMessage($message);
         }
         return $object;
     }
@@ -87,11 +113,24 @@ final class StaticValidator
      * message identifiers, and the array values are the corresponding
      * human-readable message strings.
      *
+     * @deprecated  You should use instead the StaticValidator::getMessage()
+     *
      * @return array
      */
     public static function geMessages()
     {
-        return static::$_messages;
+        return static::$messages;
+    }
+
+    /**
+     * Returns the message that explain why the most recent
+     * validates() call returned false.
+     *
+     * @return array
+     */
+    public static function geMessage()
+    {
+        return static::$message;
     }
 
     /**

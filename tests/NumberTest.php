@@ -52,6 +52,6 @@ class NumberTest extends TestCase
      */
     public function validate($value, $result)
     {
-        $this->assertEquals($result, $this->validator->isValid($value));
+        $this->assertEquals($result, $this->validator->validates($value));
     }
 }

@@ -29,7 +29,7 @@ class AlphaNumericTest extends TestCase
     {
         $validator = new AlphaNumeric();
         $value = "Test123";
-        $this->assertTrue($validator->isValid($value));
-        $this->assertFalse($validator->isValid(''));
+        $this->assertTrue($validator->validates($value));
+        $this->assertFalse($validator->validates(''));
     }
 }

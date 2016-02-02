@@ -16,6 +16,7 @@ use Slick\Common\Base;
  *
  * @package Slick\Validator
  * @author  Filipe Silva <silvam.filipe@gmail.com>
+ * @deprecated You should use the ValidationChain instead
  */
 class ValidatorChain extends Base implements ChainInterface
 {
@@ -43,9 +44,9 @@ class ValidatorChain extends Base implements ChainInterface
         $messages = [];
         $valid = true;
         foreach ($this->_validators as $validator) {
-            if (!$validator->isValid($value)) {
+            if (!$validator->validates($value)) {
                 $valid = false;
-                $messages = array_merge($messages, $validator->getMessages());
+                $messages[] = $validator->getMessage();
             }
         }
         $this->_messages = $messages;

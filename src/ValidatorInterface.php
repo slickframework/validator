@@ -20,28 +20,30 @@ interface ValidatorInterface
     /**
      * Returns true if and only if $value meets the validation requirements
      *
+     * The context specified can be used in the validation process so that
+     * the same value can be valid or invalid depending on that data.
+     *
      * @param mixed $value
+     * @param array|mixed $context
+     *
      * @return bool
      */
-    public function isValid($value);
+    public function validates($value, $context = []);
 
     /**
      * Returns an array of messages that explain why the most recent
-     * isValid() call returned false. The array keys are validation failure
-     * message identifiers, and the array values are the corresponding
-     * human-readable message strings.
+     * validates() call returned false.
      *
      * @return array
      */
-    public function getMessages();
+    public function getMessage();
 
     /**
      * Sets a custom message for a given identifier
      *
-     * @param string $identifier
      * @param string $message
      *
      * @return ValidatorInterface
      */
-    public function setMessage($identifier, $message);
+    public function setMessage($message);
 }

@@ -41,7 +41,7 @@ class NotEmptyTest extends TestCase
      */
     public function validNotEmpty()
     {
-        $this->assertTrue($this->validator->isValid(12));
+        $this->assertTrue($this->validator->validates(12));
     }
 
     /**
@@ -50,6 +50,6 @@ class NotEmptyTest extends TestCase
      */
     public function invalidNotEmpty()
     {
-        $this->assertFalse($this->validator->isValid(''));
+        $this->assertFalse($this->validator->validates(''));
     }
 }

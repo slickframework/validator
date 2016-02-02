@@ -9,34 +9,30 @@
 
 namespace Slick\Validator;
 
-use Slick\Common\Base;
-
 /**
  * AbstractValidator
  *
  * @package Slick\Validator
  * @author  Filipe Silva <silvam.filipe@gmail.com>
  */
-abstract class AbstractValidator extends Base
+abstract class AbstractValidator
 {
 
     /**
-     * @readwrite
      * @var mixed The value to evaluate
      */
-    protected $_value;
+    protected $value;
 
     /**
      * @readwrite
      * @var array
      */
-    protected $_messages = [];
+    protected $message = '';
 
     /**
-     * @readwrite
      * @var array Error messages templates
      */
-    protected $_messageTemplates = [];
+    protected $messageTemplate = '';
 
     /**
      * Returns an array of messages that explain why the most recent
@@ -46,22 +42,21 @@ abstract class AbstractValidator extends Base
      *
      * @return array
      */
-    public function getMessages()
+    public function getMessage()
     {
-        return $this->_messages;
+        return $this->message;
     }
 
     /**
      * Sets a custom message for a given identifier
      *
-     * @param string $identifier
      * @param string $message
      *
      * @return AbstractValidator
      */
-    public function setMessage($identifier, $message)
+    public function setMessage($message)
     {
-        $this->_messageTemplates[$identifier] = $message;
+        $this->messageTemplate = $message;
         return $this;
     }
 
@@ -75,18 +70,13 @@ abstract class AbstractValidator extends Base
     protected function addMessage($template)
     {
         $arguments = func_get_args();
-        $key = null;
         $template = $arguments[0];
-        if (array_key_exists($template, $this->_messageTemplates)) {
-            $key = $template;
-            $template = $this->_messageTemplates[$template];
-        }
 
         $arguments[0] = $template;
 
-        $this->_messages[$key] = sizeof($arguments) > 1
+        $this->message = sizeof($arguments) > 1
             ? call_user_func_array('sprintf', $arguments)
-            : $this->_messages[$key] = $template;
+            : $this->message = $template;
 
         return $this;
     }

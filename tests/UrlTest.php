@@ -52,6 +52,6 @@ class UrlTest extends TestCase
      */
     public function validateUrl($url, $result)
     {
-        $this->assertEquals($result, $this->validator->isValid($url));
+        $this->assertEquals($result, $this->validator->validates($url));
     }
 }
